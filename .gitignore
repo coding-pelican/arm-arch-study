@@ -1,0 +1,21 @@
+# Build artifacts
+build/
+*.o
+*.a
+arm-sim
+
+# VS Code
+.vscode/settings.json
+
+# Editor backups
+*~
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Executables
+*.exe
+*.out

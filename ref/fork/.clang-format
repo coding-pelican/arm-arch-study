@@ -1,0 +1,63 @@
+## clang-format configurator v2 https://clang-format-configurator.site/
+## see https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+---
+BasedOnStyle: LLVM
+AccessModifierOffset: -4
+AlignAfterOpenBracket: BlockIndent
+# AlignArrayOfStructures: Right
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossComments: true
+AlignConsecutiveBitFields:
+  Enabled: true
+  AcrossComments: true
+AlignConsecutiveDeclarations:
+  Enabled: true
+  AcrossComments: true
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossComments: true
+AlignConsecutiveShortCaseStatements:
+  Enabled: true
+  AcrossComments: true
+AlignEscapedNewlines: Left
+AlignOperands: AlignAfterOperator
+AllowShortBlocksOnASingleLine: Always
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortLoopsOnASingleLine: true
+BinPackArguments: false
+BinPackParameters: false
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: Never
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterObjCDeclaration: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  IndentBraces: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+BreakBeforeBinaryOperators: All
+BreakBeforeBraces: Custom
+BreakConstructorInitializers: BeforeComma
+ColumnLimit: 0
+Cpp11BracedListStyle: false
+IndentWidth: 4
+InsertBraces: true
+InsertNewlineAtEOF: true
+MaxEmptyLinesToKeep: 5
+ObjCBlockIndentWidth: 4
+PointerAlignment: Left
+SortIncludes: Never
+Standard: c++20
+TabWidth: 4
+ConstructorInitializerAllOnOneLineOrOnePerLine: false

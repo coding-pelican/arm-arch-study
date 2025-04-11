@@ -1,0 +1,241 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    { /* compiler */
+      "id": "compiler",
+      "type": "pickString",
+      "description": "Select compiler",
+      "options": [
+        "clang",
+        "gcc"
+      ],
+      "default": "clang"
+    },
+    { /* optimization */
+      "id": "optimization",
+      "type": "pickString",
+      "description": "Select optimization level",
+      "options": [
+        "-O0",
+        "-O1",
+        "-O2",
+        "-O3",
+        "-Os",
+        "-Ofast"
+      ],
+      "default": "-O2"
+    },
+    { /* runArgs */
+      "id": "runArgs",
+      "type": "promptString",
+      "description": "Arguments to pass to the program",
+      "default": ""
+    }
+  ],
+  "tasks": [
+    { /* create build directory */
+      "label": "create build directory",
+      "type": "shell",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "if not exist ${workspaceFolder}\\build mkdir ${workspaceFolder}\\build"
+      ],
+      "problemMatcher": [],
+      "detail": "Create build directory if it doesn't exist"
+    },
+    { /* compile cpu.cpp */
+      "label": "compile cpu",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-c",
+        "-std=c++17",
+        "-I${workspaceFolder}/include",
+        "-Wall",
+        "-Wextra",
+        "${input:optimization}",
+        "${workspaceFolder}/src/cpu.cpp",
+        "-o",
+        "${workspaceFolder}/build/cpu.o"
+      ],
+      "group": "build",
+      "dependsOn": [
+        "create build directory"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "Compile cpu.cpp"
+    },
+    { /* compile instruction_decoder.cpp */
+      "label": "compile instruction_decoder",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-c",
+        "-std=c++17",
+        "-I${workspaceFolder}/include",
+        "-Wall",
+        "-Wextra",
+        "${input:optimization}",
+        "${workspaceFolder}/src/instruction_decoder.cpp",
+        "-o",
+        "${workspaceFolder}/build/instruction_decoder.o"
+      ],
+      "group": "build",
+      "dependsOn": [
+        "create build directory"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "Compile instruction_decoder.cpp"
+    },
+    { /* compile barrel_shifter.cpp */
+      "label": "compile barrel_shifter",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-c",
+        "-std=c++17",
+        "-I${workspaceFolder}/include",
+        "-Wall",
+        "-Wextra",
+        "${input:optimization}",
+        "${workspaceFolder}/src/barrel_shifter.cpp",
+        "-o",
+        "${workspaceFolder}/build/barrel_shifter.o"
+      ],
+      "group": "build",
+      "dependsOn": [
+        "create build directory"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "Compile barrel_shifter.cpp"
+    },
+    { /* compile utils.cpp */
+      "label": "compile utils",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-c",
+        "-std=c++17",
+        "-I${workspaceFolder}/include",
+        "-Wall",
+        "-Wextra",
+        "${input:optimization}",
+        "${workspaceFolder}/src/utils.cpp",
+        "-o",
+        "${workspaceFolder}/build/utils.o"
+      ],
+      "group": "build",
+      "dependsOn": [
+        "create build directory"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "Compile utils.cpp"
+    },
+    { /* compile exceptions.cpp */
+      "label": "compile exceptions",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-c",
+        "-std=c++17",
+        "-I${workspaceFolder}/include",
+        "-Wall",
+        "-Wextra",
+        "${input:optimization}",
+        "${workspaceFolder}/src/exceptions.cpp",
+        "-o",
+        "${workspaceFolder}/build/exceptions.o"
+      ],
+      "group": "build",
+      "dependsOn": [
+        "create build directory"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "Compile exceptions.cpp"
+    },
+    { /* build libsim.a */
+      "label": "build libsim",
+      "type": "shell",
+      "command": "ar",
+      "args": [
+        "rcs",
+        "${workspaceFolder}/build/libsim.a",
+        "${workspaceFolder}/build/cpu.o",
+        "${workspaceFolder}/build/instruction_decoder.o",
+        "${workspaceFolder}/build/barrel_shifter.o",
+        "${workspaceFolder}/build/utils.o",
+        "${workspaceFolder}/build/exceptions.o"
+      ],
+      "group": "build",
+      "dependsOn": [
+        "compile cpu",
+        "compile instruction_decoder",
+        "compile barrel_shifter",
+        "compile utils",
+        "compile exceptions"
+      ],
+      "problemMatcher": [],
+      "detail": "Create static library from object files"
+    },
+    { /* build arm-sim */
+      "label": "build arm-sim",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-std=c++17",
+        "-I${workspaceFolder}/include",
+        "-I${workspaceFolder}/src",
+        "-Wall",
+        "-Wextra",
+        "${input:optimization}",
+        "${workspaceFolder}/main.cpp",
+        "-L${workspaceFolder}/build",
+        "-lsim",
+        "-o",
+        "${workspaceFolder}/build/arm-sim"
+      ],
+      "group": "build",
+      "dependsOn": [
+        "build libsim"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "Compile main.cpp and link with simulator library"
+    },
+    { /* clean */
+      "label": "clean",
+      "type": "shell",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "if exist ${workspaceFolder}\\build rmdir /s /q ${workspaceFolder}\\build"
+      ],
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Remove build directory and all build artifacts"
+    },
+    { /* run */
+      "label": "run",
+      "type": "shell",
+      "command": "${workspaceFolder}/build/arm-sim",
+      "args": [
+        "${input:runArgs}"
+      ],
+      "group": "test",
+      "problemMatcher": [],
+      "detail": "Run the simulator"
+    }
+  ]
+}

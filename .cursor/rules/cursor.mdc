@@ -1,0 +1,95 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# CURSOR RULES
+
+## CORE PRINCIPLES
+
+### EXTREMELY IMPORTANT:
+
+**When writing new code or modifying existing code, maintaining consistency and harmony across the entire codebase is PARAMOUNT. Never add or delete code in isolation. ALWAYS consider the broader impact of every change. Every addition, deletion, or modification must be evaluated in terms of its effect on the system as a whole.**
+
+**Remember: Code exists in an ecosystem, not in a vacuum.**
+
+- **Comprehensive Coherence**: Always ensure that any change maintains the logical coherence of the entire project. Consider how changes affect other modules, especially across module boundaries. If you modify shared components (e.g., utility functions, shared structs), carefully inspect all usages and ensure that consistency is preserved.
+- **Context Understanding**: **Fully understand the intent and purpose of the existing code before making changes. Do not rely solely on names or comments—review the implementation and usage in context to confirm behavior and design intent. Actively consult and examine relevant code in the source directory (e.g., `/src`) to verify how things work and why they were designed that way.**
+- **Minimal Change Principle**: Make only the necessary changes to achieve your objective. Avoid unrelated refactoring or structural changes.
+- **Impact Analysis**: **When changing a function, method, or data structure, explicitly check all callers and dependencies. Confirm your assumptions about their behavior (e.g., edge cases, return values, side effects) before proceeding, based on actual inspection of the codebase rather than assumptions.**
+- **Maintain Strict Objectivity**: Critically evaluate all suggestions, including those from collaborators or users. Prioritize technical accuracy and codebase integrity over agreement. Justify analyses based on evidence within the codebase.
+- **Maintain Consistent Style**: Follow the existing formatting, structure, and design conventions in the codebase. Avoid introducing personal style preferences.
+- **Prioritize Readability**: Code should be self-explanatory and easy for other developers to read and understand.
+- **Clear Intent**: Code should clearly express its purpose. Readers should never be left wondering why something was done.
+- **Consider readability** when naming variables, functions, and return values.
+- **Use descriptive and meaningful names** that clearly communicate purpose and intent.
+- **Fail Early Principle**: Ensure that the code panics or fails immediately when an invalid condition is encountered. Use assertions to enforce preconditions and postconditions. Avoid allowing the system to run with invalid state.
+- **Break down complex logic** into smaller, reusable functions that are easier to understand and test.
+- **Single Responsibility**: Each function, struct, and trait should perform a single, well-defined task. Avoid combining multiple responsibilities in one unit.
+- **Respect Abstraction Layers**: Clearly separate low-level implementation details from high-level business logic. Each layer should handle only its designated concerns.
+- **Leverage Rust's strong type system** to prevent bugs and catch issues at compile time.
+- **Prefer panic over returning errors** when preconditions are not met **in this project**.
+- **Minimal Comments**: Avoid writing comments unless the code’s intent is not obvious. When needed, comments should explain *why* something is done, not *what* is done.
+- **Maintain Consistency**: Preserve consistent patterns, architecture, and naming conventions across the codebase. New code should match the existing style.
+- **Gradual Improvement**: Aim for continuous improvement. Don’t wait for the “perfect” refactor—improve incrementally.
+- **Testability**: Write code that is easy to test. Reduce hidden side effects and clearly define dependencies.
+
+---
+
+## STEP-BY-STEP METHODOLOGY
+
+- **Sequential Approach**:
+  - Break down complex tasks into small, manageable steps.
+  - Clearly communicate your current step in the process.
+  - Outline the next steps before proceeding.
+  - Confirm key decisions before taking action.
+  - Keep track of your progress and ensure smooth transitions between steps.
+  - Never skip steps or assume that a step is complete without verification.
+  - Before modifying code that depends on external functions or data, carefully verify those dependencies—especially their boundary conditions, return values, and side effects.
+
+- **Progress Tracking**:
+  - Track which steps are completed.
+  - Log any deviations from the planned sequence.
+  - Keep the context clear between each step.
+  - Always verify that a step is complete before moving on to the next.
+
+---
+
+## DATA VALIDATION PRINCIPLE
+
+- **Validate at Boundaries**: Perform data validation primarily at the system or module boundaries—when data enters the system or crosses important interfaces. Ensure data is valid before it flows deeper into the system.
+- **Assume Internal Validity**: Internal functions and methods should operate under the assumption that their inputs have already been validated according to clearly defined contracts (e.g., type checks, null checks, range checks).
+- **Simplify Internal Logic**: Minimize redundant validations within the core logic. Trust that inputs meet the expected invariants and focus on processing rather than guarding.
+
+---
+
+## CODE TRACING COMPLETENESS PRINCIPLE
+
+When analyzing data flow and state changes, always trace the source code to completion. Particularly when complex state management or data transformation occurs, thoroughly examine the implementation of all related modules and functions before drawing conclusions. Judgments based on assumptions or conjectures are unreliable; only complete execution path analysis of the code leads to accurate understanding.
+
+- **Follow data through transformations**: Track how data is modified across function boundaries and module interfaces.
+- **Verify assumptions with code**: Never assume implementation details—check the actual code to confirm behavior.
+- **Understand full execution paths**: Analyze all possible code paths for comprehensive understanding of control flow.
+- **Cross-reference related components**: Examine how seemingly distinct components interact through shared state or common functions.
+- **Validate edge cases**: Confirm behavior in boundary conditions by tracing code execution in those scenarios.
+- **Utilize cursor tools liberally** Never hesitate to use codebase search, file reading, and other cursor tools—use them early and often rather than making assumptions about implementation details.
+- **Prioritize direct evidence** Always favor examining actual code through tool calls over speculating about how something might work, even when you believe you understand the pattern.
+
+---
+
+## COMPREHENSIVE CODE VERIFICATION PRINCIPLE
+
+- **Exhaustive Search First**
+  Always perform thorough grep searches for function names, class names, or key identifiers before suggesting they need to be implemented or modified.
+- **Evidence-Based Conclusions**
+  Never assume code is missing based solely on import statements or references. Explicitly verify through direct tool searches whether the referenced component exists.
+- **Implementation Verification**
+  When asked to implement a function, first check if it already exists anywhere in the codebase, even if references to it suggest it might be missing.
+- **Early Tool Utilization**
+  Use `grep_search` and `codebase_search` at the beginning of your analysis rather than after formulating a potential solution.
+- **Examine Complete Files**
+  When a file is suspected to contain relevant code, examine it fully instead of only reviewing partial sections.
+- **Challenge Your Assumptions**
+  Actively question your initial understanding by searching for evidence that might contradict your assumptions before proceeding.
+- **Search Path Verification**
+  When searching for files or functions, ensure you are looking in all possible locations. Note that `/src` is typically the root directory of the codebase.

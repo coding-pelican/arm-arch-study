@@ -1,0 +1,37 @@
+Index:
+  Background: Skip
+  StandardLibrary: No
+Diagnostics:
+  UnusedIncludes: Strict
+InlayHints:
+  Enabled: true
+  TypeNameLimit: 24
+  DeducedTypes: true
+  ParameterNames: true
+  Designators: true
+  BlockEnd: false
+Hover:
+  ShowAKA: true
+---
+CompileFlags:
+  Compiler: clang++
+  Add:
+    - -xc++
+    - -std=c++17
+    - -I./include
+    - -I./src
+    - -Wall
+    - -Wextra
+    - -Werror
+---
+If:
+  PathMatch:
+    - .*\.h
+    - .*\.hh
+    - .*\.hxx
+    - .*\.hpp
+CompileFlags:
+  Add:
+    - -Wno-unused-function
+    - -Wno-unused-variable
+    - -Wno-unused-const-variable
